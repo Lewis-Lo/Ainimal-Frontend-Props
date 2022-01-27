@@ -1,19 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import ButtonAddOnePanel from './panels/ButtonAddOnePanel';
+import ParentToChildPanel from './panels/ParentToChildPanel';
+import ChildToParentPanel from './panels/ChildToParentPanel';
 
 export default function App() {
-  return (
+  const [currentPanel, setCurrentPanel] = useState("Menu");
+  
+  const MenuPanel = 
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+
+      <TouchableOpacity style={styles.button} onPress={() => setCurrentPanel("ButtonAddOnePanel")}>
+        <Text>ButtonAddOnePanel</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity style={styles.button} onPress={() => setCurrentPanel("ParentToChildPanel")}>
+        <Text>ParentToChildPanel</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => setCurrentPanel("ChildToParentPanel")}>
+        <Text>ChildToParentPanel</Text>
+      </TouchableOpacity>
+
     </View>
-  );
+  
+  const getPanel = () => {
+    if(currentPanel === "ButtonAddOnePanel") return <ButtonAddOnePanel />;
+    else if(currentPanel === "ParentToChildPanel") return <ParentToChildPanel />;
+    else if(currentPanel === "ChildToParentPanel") return <ChildToParentPanel />;
+    else return MenuPanel;
+  }
+
+  return getPanel();
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  button: {
+    width: 200,
+		height: 80,
+    backgroundColor: '#ff8',
     alignItems: 'center',
     justifyContent: 'center',
   },
